@@ -1,7 +1,16 @@
-#!/bin/python3
+#!/usr/bin/python3
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
+import pandas as pd
+from pandas.plotting import scatter_matrix
+import sys
+import matplotlib
+import numpy as np
+import scipy as sp
+import IPython
+import sklearn
+import mglearn
 
 iris_dataset = load_iris()
 
@@ -44,4 +53,11 @@ print("y_trains shape: \n{}\n\n".format(y_train.shape))
 print("X_test shape: \n{}\n\n".format(X_test.shape))
 print("y_test shape: \n{}\n\n".format(y_test.shape))
 
-# Teste
+# Create dataframe from data in X_train
+# label the columns using the strings in iris_dataset.feature_names
+
+iris_dataframe = pd.DataFrame(X_train, columns=iris_dataset.feature_names)
+
+# Create a scatter matrix from the dataframe, color by y_train
+grr = scatter_matrix(iris_dataframe, c=y_train, figsize=(15, 15), marker='0',
+    hist_kwds={'bins': 20}, s=60, alpha=.8, cmap=mglearn.cm3)
