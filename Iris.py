@@ -43,3 +43,5 @@ print("y_trains shape: \n{}\n\n".format(y_train.shape))
 
 print("X_test shape: \n{}\n\n".format(X_test.shape))
 print("y_test shape: \n{}\n\n".format(y_test.shape))
+
+# Teste
