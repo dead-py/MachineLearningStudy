@@ -2,6 +2,7 @@
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 from pandas.plotting import scatter_matrix
 import sys
@@ -16,7 +17,7 @@ iris_dataset = load_iris()
 
 print("Keys of iris_dataset: \n{}\n\n".format(iris_dataset.keys()))
 
-# print(iris_dataset['DESCR']) ## DESCRICAO DO ARQUIVO
+# print(iris_dataset['DESCR']) ## FILE DESCRIPTION
 
 # Target names for the iris species
 print("Target names: \n{}\n\n".format(iris_dataset['target_names']))
@@ -61,3 +62,21 @@ iris_dataframe = pd.DataFrame(X_train, columns=iris_dataset.feature_names)
 # Create a scatter matrix from the dataframe, color by y_train
 grr = scatter_matrix(iris_dataframe, c=y_train, figsize=(15, 15), marker='0',
     hist_kwds={'bins': 20}, s=60, alpha=.8, cmap=mglearn.cm3)
+
+# Creating the Estimator class.
+#  n_neighbors is set to one neighbor.
+knn = KNeighborsClassifier(n_neighbors=1)
+
+# The fit method takes the arguments to build the model on the training set.
+knn.fit(X_train, y_train) 
+
+# Inputing new sample of Iris in the array
+X_new = np.array([[5, 2.9, 1, 0.2]])
+print("X_new.shape: \n{}\n\n".format(X_new.shape))
+
+# To make a prediction, call the predict method of the knn object.
+prediction = knn.predict(X_new)
+print("Prediction: \n{}\n\n".format(prediction))
+print("Predicted target name: \n{}\n\n".format(
+    iris_dataset['target_names'][prediction]))
+
