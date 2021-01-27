@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.9
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -61,14 +61,14 @@ iris_dataframe = pd.DataFrame(X_train, columns=iris_dataset.feature_names)
 
 # Create a scatter matrix from the dataframe, color by y_train
 grr = scatter_matrix(iris_dataframe, c=y_train, figsize=(15, 15), marker='0',
-    hist_kwds={'bins': 20}, s=60, alpha=.8, cmap=mglearn.cm3)
+                     hist_kwds={'bins': 20}, s=60, alpha=.8, cmap=mglearn.cm3)
 
 # Creating the Estimator class.
 #  n_neighbors is set to one neighbor.
 knn = KNeighborsClassifier(n_neighbors=1)
 
 # The fit method takes the arguments to build the model on the training set.
-knn.fit(X_train, y_train) 
+knn.fit(X_train, y_train)
 
 # Inputing new sample of Iris in the array
 X_new = np.array([[5, 2.9, 1, 0.2]])
@@ -79,4 +79,18 @@ prediction = knn.predict(X_new)
 print("Prediction: \n{}\n\n".format(prediction))
 print("Predicted target name: \n{}\n\n".format(
     iris_dataset['target_names'][prediction]))
+
+# We can measure how well the model works by computing the accuracy,
+# which is the fraction of flowers for which the right species was predicted.
+y_pred = knn.predict(X_test)
+print("Test set predictions: \n{}\n\n".format(y_pred))
+
+print("Test set score: {:.2f}".format(np.mean(y_pred == y_test)))
+
+# We can also use the score method of the knn object, which will compute the rest set accuracy for us:
+print("Test set score: {:.2f}".format(knn.score(X_test, y_test)))
+
+# For this model, the test set accuracy is about 0.97,
+# which means we made the right prediction for 97% of the irises in the test set.
+# We can expect our model to be correct 97% of the time for new irises.
 
